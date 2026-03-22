@@ -1,0 +1,38 @@
+<div class="package-detail-full">
+  <header class="detail-header">
+<h1>{{ package()?.title }} Details</h1>
+    <p>Complete itinerary, inclusions, booking form</p>
+  </header>
+  <section class="detail-content">
+<img [src]="package()?.image" [alt]="package()?.title" class="detail-img">
+    <div class="detail-info">
+<div class="price-large">₹{{ package()?.price }} <span>per person</span></div>
+<div class="rating-large">{{ package()?.rating }} ★ ({{ package()?.reviews }} reviews)</div>
+        <div class="itinerary">
+        <h3>Itinerary</h3>
+        @for (day of package()?.itinerary; track $index) {
+          <div class="day-item">
+            <span class="day-number">Day {{ $index + 1 }}</span>
+            <p>{{ day }}</p>
+          </div>
+        }
+      </div>
+      <div class="inclusions">
+        <h3>Inclusions</h3>
+        @for (inc of package()?.inclusions; track $index) {
+          <li>{{ inc }}</li>
+        }
+      </div>
+    </div>
+  </section>
+  <section class="booking-section">
+    <h3>Book Now</h3>
+    <form class="booking-form">
+      <input type="date" placeholder="Check-in Date">
+      <input type="number" placeholder="Guests">
+      <button class="book-now-btn">Book for ₹15,999</button>
+    </form>
+  </section>
+  <button class="back-btn" routerLink="/konkan-packages">← Back to Packages</button>
+</div>
+

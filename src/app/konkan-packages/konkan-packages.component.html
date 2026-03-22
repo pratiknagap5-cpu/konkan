@@ -1,0 +1,94 @@
+<div class="makemytrip-clone">
+  <!-- Header/Navbar - Exact clone -->
+  <header class="header">
+    <nav class="navbar">
+        <div class="logo">
+        <img src="/assets/konskie-poland-december-14-2024-makemytrip-company-logo-displayed-on-mobile-phone-2YXCP96.jpg" alt="MakeMyTrip" height="40">
+      </div>
+      <div class="nav-links">
+        <a href="#">Holidays</a>
+        <a routerLink="/hotels">Hotels</a>
+        <a routerLink="/flights">Flights</a>
+        <span class="location-chip">Mumbai <i class="arrow-down"></i></span>
+      </div>
+      <div class="user-actions">
+        <a href="#" class="login-btn" (click)="login()">Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Banner with Search -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Konkan Packages from Mumbai</h1>
+      <p>Handpicked Konkan holiday packages at best prices</p>
+    </div>
+    <form class="search-form" (ngSubmit)="filterPackages(); $event.preventDefault()">
+      <div class="form-group">
+        <label>Search Packages</label>
+        <input type="text" [(ngModel)]="searchTerm" name="searchTerm" [ngModelOptions]="{standalone: true}" placeholder="Search by name, location..." (keyup.enter)="filterPackages()">
+      </div>
+      <div class="form-group">
+        <label>Rooms/Guests</label>
+        <input type="number" placeholder="1 Room, 2 Guests">
+      </div>
+      <div class="form-group">
+        <label>Price</label>
+        <select>
+          <option>Any Price</option>
+          <option>₹10k - ₹20k</option>
+        </select>
+      </div>
+      <button type="submit" class="search-btn">Search Packages</button>
+    </form>
+  </section>
+
+  <!-- Filters Sidebar -->
+  <aside class="filters">
+    <h3>Filters</h3>
+    <div class="filter-group">
+      <h4>Duration</h4>
+      <label><input type="checkbox" [ngModel]="selectedDuration" name="duration" value="3N/4D" [ngModelOptions]="{standalone: true}"> 3N/4D</label>
+      <!-- more -->
+    </div>
+  </aside>
+
+  <!-- Packages Grid -->
+  <section class="packages-grid">
+    <div class="grid-header">
+      <h2>{{ filteredPackages().length }} Konkan Packages Found</h2>
+      <select>Sort by: Price Low-High</select>
+    </div>
+    <div class="grid">
+      @for (pkg of filteredPackages(); track pkg.id) {
+        <div class="package-card">
+          <img [src]="pkg.image" [alt]="pkg.title">
+          <div class="card-content">
+            <div class="rating">{{ pkg.rating }}/5 ({{ pkg.reviews }} reviews)</div>
+            <h3>{{ pkg.title }}</h3>
+            <p>{{ pkg.subtitle }}</p>
+            <div class="price">
+              <span class="current">₹{{ pkg.price }}</span>
+              @if (pkg.originalPrice) {
+                <span class="original">₹{{ pkg.originalPrice }}</span>
+              }
+              <span class="per-person">per person</span>
+            </div>
+            <ul class="highlights">
+              @for (highlight of pkg.highlights; track $index) {
+                <li>{{ highlight }}</li>
+              }
+            </ul>
+<a routerLink="/konkan-packages/{{ pkg.id }}" class="view-details-btn">View Details</a>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; MakeMyTrip Clone - Konkan Packages</p>
+  </footer>
+</div>
+

@@ -38,8 +38,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "10kB",
+                  "maximumError": "20kB"
                 }
               ],
               "outputHashing": "all"
@@ -52,18 +52,19 @@
           },
           "defaultConfiguration": "production"
         },
-        "serve": {
-          "builder": "@angular/build:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "tra:build:production"
-            },
-            "development": {
-              "buildTarget": "tra:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
+"serve": {
+      "builder": "@angular/build:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "tra:build:production"
         },
+        "development": {
+          "buildTarget": "tra:build:development",
+          "proxyConfig": "proxy.conf.json"
+        }
+      },
+      "defaultConfiguration": "development"
+    }
         "test": {
           "builder": "@angular/build:unit-test"
         }

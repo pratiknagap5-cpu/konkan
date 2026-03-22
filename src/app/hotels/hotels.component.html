@@ -1,0 +1,90 @@
+<div class="makemytrip-clone">
+  <header class="header">
+    <nav class="navbar">
+      <div class="logo">
+        <img src="/assets/konskie-poland-december-14-2024-makemytrip-company-logo-displayed-on-mobile-phone-2YXCP96.jpg" alt="MakeMyTrip" height="40">
+      </div>
+      <div class="nav-links">
+        <a routerLink="/konkan-packages">Holidays</a>
+        <a routerLink="/hotels">Hotels</a>
+        <a routerLink="/flights">Flights</a>
+        <span class="location-chip">Mumbai <i class="arrow-down"></i></span>
+      </div>
+      <div class="user-actions">
+        <a href="#" class="login-btn" (click)="login()">Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Konkan Hotels & Resorts</h1>
+      <p>Best hotel deals in Ratnagiri, Ganpatipule, Alibaug</p>
+    </div>
+    <form class="search-form" (ngSubmit)="filterHotels()">
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" [(ngModel)]="searchTerm" name="searchTerm" [ngModelOptions]="{standalone: true}" placeholder="Ratnagiri...">
+      </div>
+      <div class="form-group">
+        <label>Dates</label>
+        <input type="date">
+      </div>
+      <div class="form-group">
+        <label>Guests</label>
+        <input type="number" placeholder="2 Guests">
+      </div>
+      <button type="submit" class="search-btn">Search Hotels</button>
+    </form>
+  </section>
+
+  <aside class="filters">
+    <h3>Filters</h3>
+    <div class="filter-group">
+      <h4>Star Rating</h4>
+      <label><input type="checkbox"> 5 Star</label>
+      <label><input type="checkbox"> 4 Star</label>
+      <label><input type="checkbox"> 3 Star</label>
+    </div>
+    <div class="filter-group">
+      <h4>Amenities</h4>
+      <label><input type="checkbox"> Pool</label>
+      <label><input type="checkbox"> Beachfront</label>
+    </div>
+  </aside>
+
+  <section class="hotels-grid">
+    <div class="grid-header">
+      <h2>{{ filteredHotels().length }} Hotels Found</h2>
+      <select>Sort by: Price Low-High</select>
+    </div>
+    <div class="grid">
+      @for (hotel of filteredHotels(); track hotel.id) {
+        <div class="hotel-card">
+          <img [src]="hotel.image" [alt]="hotel.name">
+          <div class="card-content">
+            <div class="rating-stars">{{ '★'.repeat(hotel.stars) }} {{ hotel.rating }}/5 ({{ hotel.reviews }} reviews)</div>
+            <h3>{{ hotel.name }}</h3>
+            <p class="location">{{ hotel.location }}</p>
+            <div class="price">
+              <span class="current">₹{{ hotel.price }}/night</span>
+              @if (hotel.originalPrice) {
+                <span class="original">₹{{ hotel.originalPrice }}</span>
+              }
+            </div>
+            <ul class="amenities">
+              @for (amenity of hotel.amenities; track $index) {
+                <li>{{ amenity }}</li>
+              }
+            </ul>
+            <a routerLink="/hotels/{{ hotel.id }}" class="view-details-btn">View Details</a>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; MakeMyTrip Clone - Hotels</p>
+  </footer>
+</div>

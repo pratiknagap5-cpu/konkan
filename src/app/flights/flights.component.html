@@ -1,0 +1,110 @@
+<div class="makemytrip-clone">
+  <!-- Header/Navbar - Reuse from packages -->
+  <header class="header">
+    <nav class="navbar">
+      <div class="logo">
+        <img src="/assets/konskie-poland-december-14-2024-makemytrip-company-logo-displayed-on-mobile-phone-2YXCP96.jpg" alt="MakeMyTrip" height="40">
+      </div>
+      <div class="nav-links">
+        <a routerLink="/konkan-packages">Holidays</a>
+        <a href="#">Hotels</a>
+        <a routerLink="/flights">Flights</a>
+        <span class="location-chip">Mumbai <i class="arrow-down"></i></span>
+      </div>
+      <div class="user-actions">
+        <a href="#" class="login-btn" (click)="login()">Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Banner with Search -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Flights from Mumbai to Konkan</h1>
+      <p>Best flight deals to Ratnagiri, Kolhapur, Sindhudurg</p>
+    </div>
+    <form class="search-form" (ngSubmit)="filterFlights()">
+      <div class="form-group">
+        <label>From</label>
+        <input type="text" [(ngModel)]="searchTerm" name="searchTerm" [ngModelOptions]="{standalone: true}" placeholder="Mumbai (BOM)">
+      </div>
+      <div class="form-group">
+        <label>To</label>
+        <input type="text" placeholder="Ratnagiri (RTI)">
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date">
+      </div>
+      <button type="submit" class="search-btn">Search Flights</button>
+    </form>
+  </section>
+
+  <!-- Filters Sidebar -->
+  <aside class="filters">
+    <h3>Filters</h3>
+    <div class="filter-group">
+      <h4>Airlines</h4>
+      <label><input type="checkbox"> IndiGo</label>
+      <label><input type="checkbox"> Air India</label>
+    </div>
+    <div class="filter-group">
+      <h4>Stops</h4>
+      <label><input type="checkbox"> Non-stop</label>
+    </div>
+  </aside>
+
+  <!-- Flights Grid -->
+  <section class="flights-grid">
+    <div class="grid-header">
+      <h2>{{ filteredFlights().length }} Flights Found</h2>
+      <select>Sort by: Price Low-High</select>
+    </div>
+    <div class="grid">
+      @for (flight of filteredFlights(); track flight.id) {
+        <div class="flight-card">
+          <div class="flight-header">
+            <img [src]="flight.image" [alt]="flight.airline">
+            <div class="airline-info">
+              <h3>{{ flight.airline }}</h3>
+              <span class="flight-number">{{ flight.flightNumber }}</span>
+            </div>
+          </div>
+          <div class="flight-route">
+            <div class="route-stop">
+              <div class="city">{{ flight.departure }}</div>
+              <div class="time">{{ flight.departureTime }}</div>
+            </div>
+            <div class="route-line">
+              <span>{{ flight.duration }}</span>
+              @if (flight.stops > 0) {
+                <span>{{ flight.stops }} stop{{ flight.stops > 1 ? 's' : '' }}</span>
+              } @else {
+                <span>Non-stop</span>
+              }
+            </div>
+            <div class="route-stop">
+              <div class="city">{{ flight.arrival }}</div>
+              <div class="time">{{ flight.arrivalTime }}</div>
+            </div>
+          </div>
+          <div class="flight-footer">
+            <div class="rating">{{ flight.rating }}/5</div>
+            <div class="price">
+              <span class="current">₹{{ flight.price }}</span>
+              @if (flight.originalPrice) {
+                <span class="original">₹{{ flight.originalPrice }}</span>
+              }
+            </div>
+            <a routerLink="/flights/{{ flight.id }}" class="book-btn">Book Now</a>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; MakeMyTrip Clone - Flights</p>
+  </footer>
+</div>
